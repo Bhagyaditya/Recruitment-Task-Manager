@@ -16,7 +16,7 @@ namespace Assignment.Controllers
                "Port=3306;" +
                "Database=usertest;" +
                "User=root;" +
-               "Password=NBhagya-07;";
+               "Password=Your_Password;";
 
         public HomeController(ILogger<HomeController> logger)
         {
