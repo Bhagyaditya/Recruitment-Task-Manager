@@ -1,0 +1,225 @@
+﻿@model Assignment.Models.JobModel
+
+@{
+    ViewData["Title"] = "Edit Job";
+}
+
+<h2>Edit Job</h2>
+
+<form asp-controller="Home"
+      asp-action="EditJob"
+      method="post"
+      class="userForm">
+
+    <input type="hidden" asp-for="Id" />
+
+    <!-- Job Title -->
+    <div>
+        <label asp-for="JobTitle">Job Title</label>
+        <input asp-for="JobTitle" type="text" required />
+    </div>
+
+    <br />
+
+    <!-- Company -->
+    <div>
+        <label asp-for="Company">Company</label>
+        <input asp-for="Company" type="text" required />
+    </div>
+
+    <br />
+
+    <!-- HR -->
+    <div>
+        <label asp-for="HR">HR</label>
+        <input asp-for="HR" type="text" />
+    </div>
+
+    <br />
+
+    <!-- Skills -->
+    <div>
+        <label asp-for="SkillsSet">Skills Set</label>
+        <textarea asp-for="SkillsSet"
+                  rows="3"></textarea>
+    </div>
+
+    <br />
+
+    <!-- Qualification -->
+    <div>
+        <label asp-for="Qualification">Qualification</label>
+        <input asp-for="Qualification" type="text" />
+    </div>
+
+    <br />
+
+    <!-- Experience -->
+    <div>
+        <label asp-for="Experience">Experience (Years)</label>
+        <input asp-for="Experience"
+               type="number"
+               min="0"
+               required />
+    </div>
+
+    <br />
+
+    <!-- Salary -->
+    <div>
+        <label asp-for="Salary">Salary (Annual)</label>
+        <input asp-for="Salary"
+               type="number"
+               min="0"
+               step="0.01"
+               required />
+    </div>
+
+    <br />
+
+    <!-- Job Location -->
+    <div>
+        <label asp-for="JobLocation">Job Location</label>
+        <input asp-for="JobLocation"
+               type="text"
+               required />
+    </div>
+
+    <br />
+
+    <!-- Industry -->
+    <div>
+        <label asp-for="Industry">Industry</label>
+        <input asp-for="Industry"
+               type="text" />
+    </div>
+
+    <br />
+
+    <!-- Number of Openings -->
+    <div>
+        <label asp-for="NumberOfOpening">
+            Number of Openings
+        </label>
+
+        <input asp-for="NumberOfOpening"
+               type="number"
+               min="1"
+               required />
+    </div>
+
+    <br />
+
+    <!-- Age Limit -->
+    <div>
+        <label asp-for="AgeLimit">
+            Age Limit
+        </label>
+
+        <input asp-for="AgeLimit"
+               type="number"
+               min="0" />
+    </div>
+
+    <br />
+
+    <!-- Vacancy Live Date -->
+    <div>
+        <label asp-for="VacancyLiveDate">
+            Vacancy Live Date
+        </label>
+
+        <input asp-for="VacancyLiveDate"
+               type="date"
+               required />
+    </div>
+
+    <br />
+
+    <!-- Interview Address -->
+    <div>
+        <label asp-for="InterviewAddress">
+            Interview Address
+        </label>
+
+        <textarea asp-for="InterviewAddress"
+                  rows="3"></textarea>
+    </div>
+
+    <br />
+
+    <!-- Recruiter Level -->
+    <div>
+        <label asp-for="RecruiterLevel">
+            Recruiter Level
+        </label>
+
+        <select asp-for="RecruiterLevel">
+            <option value="">-- Select --</option>
+            <option value="Level-A">Level-A</option>
+            <option value="Level-B">Level-B</option>
+            <option value="Level-C">Level-C</option>
+            <option value="Level-D">Level-D</option>
+        </select>
+    </div>
+
+    <br />
+
+    <!-- Special Note -->
+    <div>
+        <label asp-for="SpecialNote">
+            Special Note
+        </label>
+
+        <textarea asp-for="SpecialNote"
+                  rows="3"></textarea>
+    </div>
+
+    <br />
+
+    <!-- Job Priority -->
+    <div>
+        <label asp-for="JobPriority">
+            Job Priority
+        </label>
+
+        <select asp-for="JobPriority">
+            <option value="Urgent">Urgent</option>
+            <option value="High">High</option>
+            <option value="Normal">Normal</option>
+            <option value="Low">Low</option>
+        </select>
+    </div>
+
+    <br />
+
+    <!-- Job Description -->
+    <div>
+        <label asp-for="JobDescription">
+            Job Description
+        </label>
+
+        <textarea asp-for="JobDescription"
+                  rows="6"
+                  required></textarea>
+    </div>
+
+    <br />
+
+    <div style="display:flex; gap:15px;">
+
+        <button type="submit"
+                class="edit-button">
+            Update Job
+        </button>
+
+        <a asp-controller="Home"
+           asp-action="JobBoard"
+           class="delete-button"
+           style="text-decoration:none;">
+            Cancel
+        </a>
+
+    </div>
+
+</form>

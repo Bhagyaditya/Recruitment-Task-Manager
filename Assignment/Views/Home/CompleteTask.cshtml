@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model Assignment.Models.TaskModel
+
+@{
+    ViewData["Title"] = "Complete Task";
+}
+
+<h2>Complete Task</h2>
+
+<div class="userForm">
+
+    <h3>@Model.Title</h3>
+
+    <p>
+        <strong>Task:</strong>
+        @Model.TaskDescription
+    </p>
+
+    <p>
+        <strong>Assigned By:</strong>
+        @Model.AssignedBy
+    </p>
+
+    <p>
+        <strong>Start Date:</strong>
+        @Model.StartDate.ToString("dd-MM-yyyy")
+    </p>
+
+    <p>
+        <strong>End Date:</strong>
+        @Model.EndDate.ToString("dd-MM-yyyy")
+    </p>
+
+</div>
+
+<hr />
+
+<form asp-controller="Home"
+      asp-action="CompleteTask"
+      method="post"
+      class="userForm">
+
+    <input type="hidden"
+           asp-for="Id" />
+
+    <div>
+        <label for="completionNote">
+            Completion Note
+        </label>
+
+        <textarea id="completionNote"
+                  name="completionNote"
+                  rows="6"
+                  required
+                  placeholder="Describe what was completed..."></textarea>
+    </div>
+
+    <br />
+
+    <button type="submit" class="edit-button">
+        Submit Completion
+    </button>
+
+    <a asp-controller="Home"
+       asp-action="Dashboard">
+        Cancel
+    </a>
+
+</form>

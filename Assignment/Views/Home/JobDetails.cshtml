@@ -1,0 +1,221 @@
+﻿@model Assignment.Models.JobModel
+
+@{
+    ViewData["Title"] = "Job Details";
+}
+
+<div class="job-details-container">
+
+    <!-- Header -->
+    <div class="job-details-header">
+
+        <div>
+            <h2>@Model.JobTitle</h2>
+
+            <span class="job-company">
+                @Model.Company
+            </span>
+        </div>
+
+        <span class="job-priority @Model.JobPriority.ToLower()">
+            @Model.JobPriority
+        </span>
+
+    </div>
+
+
+    <!-- Basic Information -->
+    <div class="job-details-section">
+
+        <h3>Job Information</h3>
+
+        <div class="job-details-grid">
+
+            <div class="job-detail-item">
+                <strong>Job Title</strong>
+                <span>@Model.JobTitle</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Company</strong>
+                <span>@Model.Company</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Job Location</strong>
+                <span>@Model.JobLocation</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Industry</strong>
+                <span>@Model.Industry</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Experience</strong>
+                <span>@Model.Experience years</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Salary</strong>
+                <span>₹ @Model.Salary.ToString("N0")</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Number of Openings</strong>
+                <span>@Model.OriginalNumberOfOpening</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Number of CV's required</strong>
+                <span>@Model.NumberOfOpening</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Qualification & Skills -->
+    <div class="job-details-section">
+
+        <h3>Requirements</h3>
+
+        <div class="job-details-grid">
+
+            <div class="job-detail-item">
+                <strong>Qualification</strong>
+                <span>@Model.Qualification</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Skills Set</strong>
+                <span>@Model.SkillsSet</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Job Description -->
+    <div class="job-details-section">
+
+        <h3>Job Description</h3>
+
+        <div class="job-description-full">
+            @Model.JobDescription
+        </div>
+
+    </div>
+
+
+    <!-- Recruitment Information -->
+    <div class="job-details-section">
+
+        <h3>Recruitment Information</h3>
+
+        <div class="job-details-grid">
+
+            <div class="job-detail-item">
+                <strong>HR</strong>
+                <span>@Model.HR</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Recruiter Level</strong>
+                <span>@Model.RecruiterLevel</span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Vacancy Live Date</strong>
+                <span>
+                    @Model.VacancyLiveDate.ToString("dd-MM-yyyy")
+                </span>
+            </div>
+
+            <div class="job-detail-item">
+                <strong>Interview Address</strong>
+                <span>@Model.InterviewAddress</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Special Note -->
+    @if (!string.IsNullOrWhiteSpace(Model.SpecialNote))
+    {
+        <div class="job-details-section">
+
+            <h3>Special Note</h3>
+
+            <div class="job-special-note">
+                @Model.SpecialNote
+            </div>
+
+        </div>
+    }
+
+
+    <div class="job-details-footer">
+
+        @if (Context.Session.GetString("Role") == "Executive")
+        {
+            <form asp-controller="Home"
+                  asp-action="UploadCV"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="job-cv-form">
+
+                <input type="hidden"
+                       name="jobId"
+                       value="@Model.Id" />
+
+                <input type="file"
+                       id="cvFile"
+                       name="cvFile"
+                       accept=".pdf,.doc,.docx"
+                       required
+                       style="display:none;" />
+
+                <label for="cvFile"
+                       class="cv-upload-label">
+                    Choose CV
+                </label>
+
+ 
+                <span id="fileName"
+                      class="file-name">
+                    No file chosen
+                </span>
+
+                <button type="submit"
+                        class="edit-button">
+                    Add CV
+                </button>
+
+            </form>
+        }
+
+    </div>
+
+
+</div>
+
+
+<script>
+    document.getElementById("cvFile")?.addEventListener("change", function () {
+
+        const fileName = document.getElementById("fileName");
+
+        if (this.files.length > 0) {
+            fileName.textContent = this.files[0].name;
+        }
+        else {
+            fileName.textContent = "No file chosen";
+        }
+
+    });
+</script>

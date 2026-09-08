@@ -1,0 +1,322 @@
+﻿@model Assignment.Models.PlanningModel
+
+@{
+    ViewData["Title"] = "Add Plan";
+
+    string role = Context.Session.GetString("Role");
+}
+
+@if (role != "Manager" && role != "Team Leader")
+{
+    <div class="access-denied">
+
+        <h3>Access Denied</h3>
+
+        <p>
+            Only Managers and Team Leaders can create plans.
+        </p>
+
+    </div>
+}
+else
+{
+    <div class="planning-container">
+
+        <div class="planning-header">
+
+            <h2>Add Planning Task</h2>
+
+            <a asp-controller="Home"
+               asp-action="PlanningTasks"
+               class="assign-task-button">
+                Back to Planning
+            </a>
+
+        </div>
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="validation-summary">
+
+                @Html.ValidationSummary(
+                true,
+                "",
+                new { @class = "text-danger" })
+
+    </div>
+        }
+
+
+        <form asp-controller="Home"
+              asp-action="Planning"
+              method="post"
+              class="planning-form">
+
+            <div class="form-group">
+
+                <label asp-for="JobId">
+                    Select Job
+                </label>
+
+                <select asp-for="JobId"
+                        asp-items="ViewBag.Jobs">
+
+                    <option value="">
+                        -- Select Job --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="JobId"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="form-group">
+
+                <label asp-for="Title">
+                    Task Title
+                </label>
+
+                <input asp-for="Title"
+                       type="text"
+                       placeholder="Enter specialized task title" />
+
+                <span asp-validation-for="Title"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label asp-for="TaskDescription">
+                    Specialized Task
+                </label>
+
+                <textarea asp-for="TaskDescription"
+                          rows="5"
+                          placeholder="Describe what the Executive needs to do..."></textarea>
+
+                <span asp-validation-for="TaskDescription"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="executiveCount">
+                    Number of Executives
+                </label>
+
+                <input type="number"
+                       id="executiveCount"
+                       min="1"
+                       max="20"
+                       value="1"
+                       class="form-control"
+                       required />
+
+                <small>
+                    Select how many executives should be assigned.
+                </small>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Select Executives
+                </label>
+
+                <div id="executiveContainer">
+
+                </div>
+
+                <span asp-validation-for="SelectedExecutives"
+                      class="text-danger">
+                </span>
+
+                <small class="select-help">
+                    Each executive can be selected separately.
+                </small>
+
+            </div>
+
+            <div class="date-row">
+
+                <div class="form-group">
+
+                    <label asp-for="StartDate">
+                        Start Date
+                    </label>
+
+                    <input asp-for="StartDate"
+                           type="date"
+                           value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+
+                    <span asp-validation-for="StartDate"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label asp-for="EndDate">
+                        End Date
+                    </label>
+
+                    <input asp-for="EndDate"
+                           type="date"
+                           value="@DateTime.Today.AddDays(1).ToString("yyyy-MM-dd")" />
+
+                    <span asp-validation-for="EndDate"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+            </div>
+
+            <button type="submit"
+                    class="assign-task-button">
+
+                Create Planned Task
+
+            </button>
+
+        </form>
+
+    </div>
+}
+
+
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+
+        const executives = [
+        @if (ViewBag.Executives != null)
+        {
+                foreach (var executive in ViewBag.Executives)
+                {
+                        <text>
+                            "@executive.Username",
+                        </text>
+                }
+        }
+        ];
+
+
+        const executiveCount =
+            document.getElementById("executiveCount");
+
+        const executiveContainer =
+            document.getElementById("executiveContainer");
+
+
+        function createExecutiveSelects()
+        {
+            executiveContainer.innerHTML = "";
+
+            let count =
+                parseInt(executiveCount.value);
+
+
+            if (isNaN(count) || count < 1)
+            {
+                return;
+            }
+
+
+            if (count > 20)
+            {
+                count = 20;
+                executiveCount.value = 20;
+            }
+
+
+            for (let i = 0; i < count; i++)
+            {
+          
+                const wrapper =
+                    document.createElement("div");
+
+                wrapper.className =
+                    "executive-select-wrapper";
+
+
+                const label =
+                    document.createElement("label");
+
+                label.innerText =
+                    "Executive " + (i + 1);
+
+
+                const select =
+                    document.createElement("select");
+
+                select.name =
+                    "SelectedExecutives";
+
+                select.className =
+                    "executive-select";
+
+                select.required = true;
+
+
+     
+                const defaultOption =
+                    document.createElement("option");
+
+                defaultOption.value = "";
+
+                defaultOption.text =
+                    "-- Select Executive --";
+
+                select.appendChild(
+                    defaultOption);
+
+
+                executives.forEach(function (executive)
+                {
+                    const option =
+                        document.createElement("option");
+
+                    option.value =
+                        executive;
+
+                    option.text =
+                        executive;
+
+                    select.appendChild(
+                        option);
+                });
+
+
+                wrapper.appendChild(label);
+
+                wrapper.appendChild(select);
+
+                executiveContainer.appendChild(wrapper);
+            }
+        }
+
+
+        createExecutiveSelects();
+
+
+        executiveCount.addEventListener(
+            "change",
+            createExecutiveSelects
+        );
+
+    </script>
+}

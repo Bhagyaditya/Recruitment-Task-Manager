@@ -1,0 +1,182 @@
+﻿@{
+    ViewData["Title"] = "Personal Dashboard";
+}
+
+<div class="personal-dashboard">
+
+    <div class="dashboard-header">
+        <h2>Welcome, @ViewBag.Username</h2>
+    </div>
+
+
+    <div class="dashboard-section">
+
+        <h3>Work Overview</h3>
+
+        <div class="dashboard-cards">
+
+            <!-- UPCOMING -->
+            <a asp-controller="Home"
+               asp-action="YourTasks"
+               asp-route-filter="upcoming"
+               class="dashboard-card upcoming-card">
+
+                <div class="card-icon">
+                    📋
+                </div>
+
+                <div class="card-content">
+                    <h4>Upcoming Tasks</h4>
+
+                    <span class="task-count">
+                        @ViewBag.UpcomingTasks
+                    </span>
+
+                    <p>Tasks starting today or later</p>
+
+                    <span class="dashboard-link">
+                        View Worklist →
+                    </span>
+                </div>
+
+            </a>
+
+
+            <!-- OVERDUE -->
+            <a asp-controller="Home"
+               asp-action="YourTasks"
+               asp-route-filter="overdue"
+               class="dashboard-card overdue-card">
+
+                <div class="card-icon">
+                    ⚠️
+                </div>
+
+                <div class="card-content">
+                    <h4>Overdue Tasks</h4>
+
+                    <span class="task-count">
+                        @ViewBag.OverdueTasks
+                    </span>
+
+                    <p>Incomplete overdue tasks</p>
+
+                    <span class="dashboard-link">
+                        View Worklist →
+                    </span>
+                </div>
+
+            </a>
+
+
+            <!-- PLANLESS JOBS -->
+            <a asp-controller="Home"
+               asp-action="JobBoard"
+               asp-route-filter="planless"
+               class="dashboard-card jobs-card">
+
+                <div class="card-icon">
+                    💼
+                </div>
+
+                <div class="card-content">
+                    <h4>Planless Jobs</h4>
+
+                    <span class="task-count">
+                        @ViewBag.JobsWithoutPlanning
+                    </span>
+
+                    <p>Jobs that need planning</p>
+
+                    <span class="dashboard-link">
+                        View Jobs →
+                    </span>
+                </div>
+
+            </a>
+
+
+            <!-- CVS UPLOADED TODAY -->
+            <a asp-controller="Home"
+               asp-action="JobBoard"
+               class="dashboard-card cvs-card">
+
+                <div class="card-icon">
+                    📄
+                </div>
+
+                <div class="card-content">
+                    <h4>CVs Uploaded Today</h4>
+
+                    <span class="task-count">
+                        @ViewBag.CVsUploadedToday
+                    </span>
+
+                    <p>Total CVs uploaded today</p>
+
+                    <span class="dashboard-link">
+                        View Jobs →
+                    </span>
+                </div>
+
+            </a>
+
+
+            <!-- ASSIGNED TASKS -->
+            <a asp-controller="Home"
+               asp-action="AssignedTasks"
+               asp-route-filter="assigned"
+               class="dashboard-card assigned-card">
+
+                <div class="card-icon">
+                    👥
+                </div>
+
+                <div class="card-content">
+                    <h4>Assigned By You</h4>
+
+                    <span class="task-count">
+                        @ViewBag.AssignedTasks
+                    </span>
+
+                    <p>Total tasks assigned</p>
+
+                    <span class="dashboard-link">
+                        View Worklist →
+                    </span>
+                </div>
+
+            </a>
+
+
+            <!-- PENDING APPROVAL -->
+            <a asp-controller="Home"
+               asp-action="PendingApproval"
+               asp-route-filter="pending"
+               class="dashboard-card approval-card">
+
+                <div class="card-icon">
+                    ✅
+                </div>
+
+                <div class="card-content">
+                    <h4>Pending Approval</h4>
+
+                    <span class="task-count">
+                        @ViewBag.PendingApprovalTasks
+                    </span>
+
+                    <p>Tasks waiting for approval</p>
+
+                    <span class="dashboard-link">
+                        Review Tasks →
+                    </span>
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

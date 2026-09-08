@@ -1,0 +1,131 @@
+﻿@model List<Assignment.Models.JobModel>
+
+@{
+    ViewData["Title"] = "Job Board";
+
+    string role = Context.Session.GetString("Role");
+}
+
+<div class="job-board-header">
+    <h2>Job Board</h2>
+</div>
+
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="user-table job-table">
+
+        
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>No. of Openings</th>
+                <th>Vacancy Live Date</th>
+                <th>Priority</th>
+                <th>Planning Tasks</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var job in Model)
+            {
+                <tr>
+
+                    <td>
+                        <strong>@job.JobTitle</strong>
+                    </td>
+
+                    <td>
+                        @job.JobDescription
+                    </td>
+
+                    <td>
+                        @job.NumberOfOpening
+                    </td>
+
+                    <td>
+                        @job.VacancyLiveDate.ToString("dd-MM-yyyy")
+                    </td>
+
+                    <td>
+                        <span class="job-priority @job.JobPriority.ToLower()">
+                            @job.JobPriority
+                        </span>
+                    </td>
+
+                    <td>
+                        <span class="planning-task-count">
+                            @job.PlanningTaskCount
+                        </span>
+                    </td>
+
+                    <td>
+                        <div class="job-actions">
+
+                            <a asp-controller="Home"
+                               asp-action="JobDetails"
+                               asp-route-id="@job.Id"
+                               class="edit-button">
+                                View Details
+                            </a>
+
+                            @if (role == "Manager")
+                            {
+                                <form asp-controller="Home"
+                                      asp-action="DeleteJob"
+                                      method="post"
+                                      onsubmit="return confirm('Are you sure you want to delete this job?');">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@job.Id" />
+
+                                    <button type="submit"
+                                            class="delete-button">
+                                        Delete
+                                    </button>
+
+                                </form>
+                            }
+
+                        </div>
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+
+    <!-- Add Job - Manager only -->
+    @if (role == "Manager")
+    {
+        <a asp-controller="Home"
+           asp-action="AddJob"
+           class="assign-task-button">
+            Add Job
+        </a>
+    }
+}
+else
+{
+    <div class="no-jobs">
+
+        <p>No jobs available.</p>
+
+        @if (role == "Manager")
+        {
+            <a asp-controller="Home"
+               asp-action="AddJob"
+               class="assign-task-link">
+                + Add First Job
+            </a>
+        }
+
+    </div>
+}

@@ -1,0 +1,107 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Assignment.Models.TaskModel>
+
+@{
+    ViewData["Title"] = "Pending Approval";
+}
+
+<h2>Pending Approval</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="user-table">
+
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Task</th>
+                <th>Assigned To</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Type</th>
+                <th>Completion Note</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var task in Model)
+            {
+                bool isPlanning = task.Type == "Planning";
+                <tr class="@(isPlanning ? "planning-task-row" : "")">
+
+                    <td>@task.Title</td>
+
+                    <td>@task.TaskDescription</td>
+
+                    <td>@task.AssignedTo</td>
+
+                    <td>
+                        @task.StartDate.ToString("dd-MM-yyyy")
+                    </td>
+
+                    <td>
+                        @task.EndDate.ToString("dd-MM-yyyy")
+                    </td>
+
+                    <td>
+
+                        @if (isPlanning)
+                        {
+                            <span class="planning-badge">
+                                Planning
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="normal-task-badge">
+                                @task.Type
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>@task.CompletionNote</td>
+
+                    <td>
+                        <form asp-controller="Home"
+                              asp-action="ApproveTask"
+                              method="post"
+                              onsubmit="return confirm('Approve this task?');">
+
+                            <input type="hidden"
+                                   name="id"
+                                   value="@task.Id" />
+
+                            <button type="submit"
+                                    class="delete-button">
+                                Approve
+                            </button>
+
+                        </form>
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="no-tasks">
+
+        <h3>No Tasks</h3>
+
+        <p>
+            You currently have no tasks assigned to you.
+        </p>
+
+    </div>
+}

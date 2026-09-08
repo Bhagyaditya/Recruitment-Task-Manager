@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Add User";
+}
+<h2>@ViewData["Title"]</h2>
+
+<form id="AddUser" class="userForm" method="post" asp-controller="Home" asp-action="AddUser">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="Name" required pattern="^\S+$" />
+
+    <label for="phone">Phone Number </label>
+    <input type="text" id="phone" name="phone" pattern="[0-9]{10}" title="Enter 10 digits"/>
+
+    <label for="location">Location</label>
+    <input type="text" id="location" name="Location" required />
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="Password" required />
+
+    <label for="role">Designation</label>
+    <select name="role" id="role">
+        <option value="Manager">Manager</option>
+        <option value="Executive">Executive</option>
+        <option value="Team Leader">Team Leader</option>
+        <option value="Admin">Admin</option>
+    </select>
+
+    <button type="submit">Add</button>
+
+</form>

@@ -1,0 +1,173 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    string role = Context.Session.GetString("Role");
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Assignment</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Assignment.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        @using Microsoft.AspNetCore.Http
+
+        @{
+            string signedIn = Context.Session.GetString("SignedIn");
+        }
+
+        <nav class="grd-navbar">
+
+            <div class="grd-navbar-container">
+
+                <div class="grd-nav-left">
+
+                    @if (signedIn != "true")
+                    {
+                        <a asp-controller="Home"
+                           asp-action="Privacy"
+                           class="grd-nav-item">
+                            <span class="grd-nav-icon">👤</span>
+                            Create Account
+                        </a>
+
+                        <a asp-controller="Home"
+                           asp-action="Login"
+                           class="grd-nav-item">
+                            <span class="grd-nav-icon">↪</span>
+                            Login
+                        </a>
+                    }
+                    else
+                    {
+                        @if (role == "Admin")
+                        {
+                            <a asp-controller="Home"
+                               asp-action="Index"
+                               class="grd-nav-item">
+                                <span class="grd-nav-icon">⌂</span>
+                                Home
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Home"
+                               asp-action="PersonalDashboard"
+                               class="grd-nav-item">
+                                <span class="grd-nav-icon">◉</span>
+                                Dashboard
+                            </a>
+
+                            <a asp-controller="Home"
+                               asp-action="YourTasks"
+                               class="grd-nav-item">
+                                <span class="grd-nav-icon">☷</span>
+                                Your Tasks
+                            </a>
+
+                            <a asp-controller="Home"
+                               asp-action="AssignedTasks"
+                               class="grd-nav-item">
+                                <span class="grd-nav-icon">♙</span>
+                                Assigned By You
+                            </a>
+
+                            <a asp-controller="Home"
+                               asp-action="PendingApproval"
+                               class="grd-nav-item">
+                                <span class="grd-nav-icon">✓</span>
+                                Pending Approval
+                            </a>
+
+                            <a asp-controller="Home"
+                               asp-action="JobBoard"
+                               class="grd-nav-item">
+                                <span class="grd-nav-icon">▣</span>
+                                Job Board
+                            </a>
+
+                            <a asp-controller="Home"
+                               asp-action="PlanningTasks"
+                               class="grd-nav-item">
+                                <span class="grd-nav-icon">☷</span>
+                                Planning
+                            </a>
+                        }
+                    }
+
+                </div>
+
+                <div class="grd-nav-right">
+
+                    @if (signedIn == "true")
+                    {
+                        <div class="grd-user-dropdown">
+
+                            <button type="button"
+                                    class="grd-user-button"
+                                    id="userDropdownButton">
+
+                                <span class="grd-user-icon">♙</span>
+
+                                <span>
+                                    @Context.Session.GetString("Username")
+                                </span>
+
+                                <span class="grd-dropdown-arrow">
+                                    ▾
+                                </span>
+
+                            </button>
+
+
+                            <div class="grd-user-menu"
+                                 id="userDropdownMenu">
+
+                                <div class="grd-user-role">
+                                    @Context.Session.GetString("Role")
+                                </div>
+
+                                <div class="grd-menu-divider"></div>
+
+                                <a asp-controller="Home"
+                                   asp-action="Logout"
+                                   class="grd-logout">
+                                    Logout
+                                </a>
+
+                            </div>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <a asp-controller="Home"
+                           asp-action="Login"
+                           class="grd-nav-item">
+                            Login
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+        </nav>
+    </header>
+    <div class=".container-fluid p-0">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

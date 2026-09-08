@@ -1,0 +1,48 @@
+﻿@model Assignment.Models.User
+
+<h2>Edit User</h2>
+
+<form method="post"
+      class="userForm"
+      asp-controller="Home"
+      asp-action="EditUser">
+
+    <input type="hidden" name="Id" value="@Model.Id"  />
+
+    <label>Username</label>
+    <input type="text"
+           name="Name"
+           value="@Model.Name"
+           pattern="^\S+$"
+           required />
+
+    <label>Phone</label>
+    <input type="text"
+           name="Phone"
+           value="@Model.Phone"
+           required pattern="[0-9]{10}" />
+
+    <label>Location</label>
+    <input type="text"
+           name="Location"
+           value="@Model.Location"
+           required />
+
+    <label>Password</label>
+    <input type="password"
+           name="password"
+           value="@Model.Password"
+           required />
+    <label for="role">Designation</label>
+    <select name="role" id="role">
+        <option value="Manager" selected="@(Model.Role == "Manager")">Manager</option>
+        <option value="Executive" selected="@(Model.Role == "Executive")">Executive</option>
+        <option value="Team Leader" selected="@(Model.Role == "Team Leader")">Team Leader</option>
+        <option value="Admin" selected="@(Model.Role == "Admin")">Admin</option>
+    </select>
+
+    <button type="submit">
+        Save Changes
+    </button>
+
+</form>

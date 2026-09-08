@@ -1,0 +1,396 @@
+﻿@model List<Assignment.Models.TaskModel>
+
+@{
+    ViewData["Title"] = "Planning";
+
+    string role = Context.Session.GetString("Role");
+    string username = Context.Session.GetString("Username");
+}
+
+@if (role != "Manager" && role != "Team Leader" && role != "Executive")
+{
+    @if (role == "Executive")
+    {
+            <h2>My Planning Tasks</h2>
+
+        @if (Model != null &&
+                 Model.Any(t => t.Type == "Planning"))
+        {
+            <table class="user-table planning-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Job ID</th>
+                        <th>Job Title</th>
+                        <th>Task Title</th>
+                        <th>Task Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var task in Model
+                            .Where(t => t.Type == "Planning"))
+                    {
+                        <tr>
+
+                            <td>
+                                <strong>
+                                    #@task.JobId
+                                </strong>
+                            </td>
+
+
+                            <td>
+                                <strong>
+                                    @task.JobTitle
+                                </strong>
+                            </td>
+
+
+                            <td>
+                                @task.Title
+                            </td>
+
+
+                            <td>
+                                @task.TaskDescription
+                            </td>
+
+
+                            <td>
+                                @task.StartDate
+                                .ToString("dd-MM-yyyy")
+                            </td>
+
+
+                            <td>
+                                @task.EndDate
+                                .ToString("dd-MM-yyyy")
+                            </td>
+
+
+                            <td>
+
+                                @if (task.Status == "Completed")
+                                {
+                                    <span class="status-badge completed">
+                                        Completed
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="status-badge pending">
+                                        @task.Status
+                                    </span>
+                                }
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="job-actions">
+
+                                    <a asp-controller="Home"
+                                       asp-action="JobDetails"
+                                       asp-route-id="@task.JobId"
+                                       class="edit-button">
+
+                                        View Job
+
+                                    </a>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        }
+        else
+        {
+            <div class="no-tasks">
+
+                <h3>No Planning Tasks</h3>
+
+                <p>
+                    You currently have no planning tasks assigned to you.
+                </p>
+
+            </div>
+        }
+    }
+}
+else if (role == "Manager" || role == "Team Leader")
+{
+    <div class="planning-header">
+
+        <h2>Planning Tasks</h2>
+
+        <a asp-controller="Home"
+           asp-action="Planning"
+           class="assign-task-button">
+            + Add Plan
+        </a>
+
+    </div>
+
+
+    @if (Model != null && Model.Any(t => t.Type == "Planning"))
+    {
+        <table class="user-table">
+
+            <thead>
+                <tr>
+
+                    <th>Job ID</th>
+                    <th>Job Title</th>
+                    <th>Task Title</th>
+                    <th>Task Description</th>
+                    <th>Assigned To</th>
+                    <th>CVs Uploaded</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var task in Model.Where(t => t.Type == "Planning"))
+                {
+                    <tr>
+
+                        <td>
+                            <strong>#@task.JobId</strong>
+                        </td>
+
+                        <td>
+                            <strong>
+                                @task.JobTitle
+                            </strong>
+                        </td>
+
+                        <td>
+                            @task.Title
+                        </td>
+
+                        <td>
+                            @task.TaskDescription
+                        </td>
+
+                        <td>
+                            @task.AssignedTo
+                        </td>
+
+                        <td>
+                            <strong>@task.CVCount</strong>
+                        </td>
+
+                        <td>
+                            @task.StartDate.ToString("dd-MM-yyyy")
+                        </td>
+
+                        <td>
+                            @task.EndDate.ToString("dd-MM-yyyy")
+                        </td>
+
+                        <td>
+
+                            @if (task.Status == "Completed")
+                            {
+                                <span class="status-badge completed">
+                                    Completed
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge pending">
+                                    @task.Status
+                                </span>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    }
+    else
+    {
+        <div class="no-tasks">
+
+            <h3>No Planning Tasks</h3>
+
+            <p>
+                You currently have no planning tasks.
+            </p>
+
+        </div>
+    }
+}
+else if (role == "Executive")
+{
+  <h2>My Planning Tasks</h2>
+
+
+
+    @if (Model != null && Model.Any(t => t.Type == "Planning"))
+    {
+        <table class="user-table planning-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Job ID</th>
+
+                    <th>Job Title</th>
+
+                    <th>Task Title</th>
+
+                    <th>Task Description</th>
+
+                    <th>Start Date</th>
+
+                    <th>End Date</th>
+
+                    <th>Status</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var task in Model.Where(t => t.Type == "Planning"))
+                {
+                    <tr>
+
+                        <td>
+                            <strong>
+                                #@task.JobId
+                            </strong>
+                        </td>
+
+
+                        <td>
+                            <strong>
+                                @task.JobTitle
+                            </strong>
+                        </td>
+
+                        <td>
+                            @task.Title
+                        </td>
+
+                        <td>
+                            @task.TaskDescription
+                        </td>
+
+                        <td>
+                            @task.StartDate.ToString("dd-MM-yyyy")
+                        </td>
+
+                        <td>
+                            @task.EndDate.ToString("dd-MM-yyyy")
+                        </td>
+
+                        <td>
+
+                            @if (task.Status == "Completed")
+                            {
+                                <span class="status-badge completed">
+                                    Completed
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge pending">
+                                    @task.Status
+                                </span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <div class="job-actions">
+
+                                <a asp-controller="Home"
+                                   asp-action="JobDetails"
+                                   asp-route-id="@task.JobId"
+                                   class="edit-button">
+
+                                    View Job
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+    }
+    else
+    {
+        <div class="no-tasks">
+
+            <h3>No Planning Tasks</h3>
+
+            <p>
+                You currently have no planning tasks assigned to you.
+            </p>
+
+        </div>
+    }
+
+}
+
+<script>
+      document.querySelectorAll('.cv-upload input[type="file"]').forEach(function (input) {
+
+          input.addEventListener('change', function () {
+
+              const taskId = this.id.split('_')[1];
+
+              const fileName =
+                  document.getElementById('fileName_' + taskId);
+
+              if (this.files.length > 0) {
+                  fileName.textContent = this.files[0].name;
+              }
+              else {
+                  fileName.textContent = "No file chosen";
+              }
+
+          });
+
+      });
+</script>

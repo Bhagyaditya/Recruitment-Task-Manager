@@ -1,0 +1,316 @@
+﻿@model Assignment.Models.JobModel
+
+@{
+    ViewData["Title"] = "Add Job";
+}
+
+<h2>Add Job</h2>
+
+<form asp-controller="Home"
+      asp-action="AddJob"
+      method="post"
+      class="userForm">
+
+    <div>
+        <label asp-for="JobTitle">Job Title</label>
+        <input asp-for="JobTitle" required />
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Company">Company</label>
+        <select asp-for="Company" required>
+            <option value="">-- Select --</option>
+            <option value="AC20220005">AC20220005</option>
+            <option value="AC20230004">AC20230004</option>
+            <option value="AC20190002">AC20190002</option>
+            <option value="AC20210014">AC20210014</option>
+            <option value="AC20210003">AC20210003</option>
+            <option value="AC20190004">AC20190004</option>
+            <option value="AC20220016">AC20220016</option>
+            <option value="AC20220007">AC20220007</option>
+            <option value="AC20220011">AC20220011</option>
+            <option value="AC20210018">AC20210018</option>
+            <option value="AC20230003">AC20230003</option>
+            <option value="AC20260007">AC20260007</option>
+            <option value="AC20220017">AC20220017</option>
+            <option value="AC20210007">AC20210007</option>
+            <option value="AC20190009">AC20190009</option>
+            <option value="AC20210032">AC20210032</option>
+            <option value="AC20210001">AC20210001</option>
+            <option value="AC20260004">AC20260004</option>
+            <option value="AC20190008">AC20190008</option>
+            <option value="AC20230001">AC20230001</option>
+            <option value="AC20230002">AC20230002</option>
+        </select>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="HR">HR</label>
+        <input asp-for="HR" />
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="SkillsSet">Skills Set</label>
+        <textarea asp-for="SkillsSet"
+                  rows="3"
+                  required></textarea>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Qualification">Qualification</label>
+
+        <select asp-for="Qualification" required>
+            <option value="">-- Select --</option>
+            <option>Bachelor of Technology (B.Tech./ BE)</option>
+            <option>Any Graduate</option>
+            <option>Any Post Graduate</option>
+            <option>B.Sc - Agriculture</option>
+            <option>B.Sc - Anthropology</option>
+            <option>B.Sc - Bio-Chemistry</option>
+            <option>B.Sc - Biology</option>
+            <option>B.Sc - Botany</option>
+            <option>B.Sc - Chemistry</option>
+            <option>B.Sc - Computers</option>
+            <option>B.Sc - Electronics</option>
+            <option>B.Sc - Environmental science</option>
+            <option>B.Sc - Food Technology</option>
+            <option>B.Sc - Maths</option>
+            <option>B.Sc - Microbiology</option>
+            <option>B.Sc - Physics</option>
+            <option>B.Sc - Statistics</option>
+            <option>B.Sc - Zoology</option>
+
+            <option>Bachelor of Arts (B.A)</option>
+            <option>Bachelor of Business Administration (B.B.A.) / B.M.S</option>
+            <option>Bachelor of Commerce (B.Com.)</option>
+            <option>Bachelor of Computer Applications (B.C.A.)</option>
+
+            <option>Bachelor of Technology - Agriculture</option>
+            <option>Bachelor of Technology - Automobile</option>
+            <option>Bachelor of Technology - Civil</option>
+            <option>Bachelor of Technology - Computers</option>
+            <option>Bachelor of Technology - Electrical</option>
+            <option>Bachelor of Technology - Electronics / Telecommunication</option>
+            <option>Bachelor of Technology - Mechanical</option>
+
+            <option>Diploma</option>
+            <option>Diploma - Civil</option>
+            <option>Diploma - Computers</option>
+            <option>Diploma - Electrical</option>
+            <option>Diploma - Mechanical</option>
+
+            <option>Engineering</option>
+            <option>Law</option>
+            <option>LLB</option>
+            <option>Management</option>
+            <option>MBBS</option>
+            <option>MBA/PGDM</option>
+            <option>Master of Arts (M.A.)</option>
+            <option>Master of Commerce (M.Com.)</option>
+            <option>Master of Computer Applications (M.C.A.)</option>
+            <option>Master of Technology (M.Tech.)</option>
+            <option>MS/M.Sc - Computers</option>
+            <option>PG Diploma</option>
+            <option>Vocational-Training</option>
+        </select>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Experience">Experience (Years)</label>
+        <input asp-for="Experience"
+               type="number"
+               min="0"
+               required />
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Salary">Salary (Annual)</label>
+        <input asp-for="Salary"
+               type="number"
+               min="0"
+               step="0.01"
+               required />
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="JobLocation">Job Location</label>
+
+        <input asp-for="JobLocation"
+               type="text"
+               placeholder="Enter city"
+               required />
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="Industry">Industry</label>
+
+        <select asp-for="Industry" required>
+            <option value="">-- Select --</option>
+            <option>Accounting/Finance</option>
+            <option>Administration Professional</option>
+            <option>Agriculture / Dairy</option>
+            <option>Banking/ Financial Services / Broking</option>
+            <option>BPO/ITES</option>
+            <option>Computer Professional</option>
+            <option>Construction/Engineering/Cement/Metals</option>
+            <option>Consultant</option>
+            <option>Customer Services</option>
+            <option>Education/ Teaching/ Training</option>
+            <option>Engineer Non-IT</option>
+            <option>FMCG/Foods/ Beverage</option>
+            <option>HR professional</option>
+            <option>IT- Hardware & Networking</option>
+            <option>IT-Software/Software Services</option>
+            <option>Manufacturing</option>
+            <option>Marketing Professional</option>
+            <option>Medical/ Healthcare / hospital</option>
+            <option>Mining</option>
+            <option>Pharma / Biotech /Clinical Research</option>
+            <option>Project Manager</option>
+            <option>Sales Professional</option>
+            <option>Scientist</option>
+            <option>Telecom /ISP</option>
+            <option>Textiles/ Garments/ Accessories</option>
+            <option>Top Management</option>
+            <option>Web/ Graphic Designer</option>
+            <option>Other</option>
+        </select>
+    </div>
+
+    <br />
+    <div>
+        <label asp-for="OriginalNumberOfOpening">
+            Number of Openings
+        </label>
+
+        <input asp-for="OriginalNumberOfOpening"
+               type="number"
+               min="1"
+               required />
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="NumberOfOpening">
+            Number of CV's required
+        </label>
+
+        <input asp-for="NumberOfOpening"
+               type="number"
+               min="1"
+               required />
+    </div>
+
+   
+
+    <br />
+
+    <div>
+        <label asp-for="AgeLimit">Age Limit</label>
+
+        <input asp-for="AgeLimit"
+               type="number"
+               min="18" />
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="VacancyLiveDate">
+            Vacancy Live Date
+        </label>
+
+        <input asp-for="VacancyLiveDate"
+               type="date"
+               required />
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="InterviewAddress">
+            Interview Address
+        </label>
+
+        <textarea asp-for="InterviewAddress"
+                  rows="3"></textarea>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="RecruiterLevel">
+            Recruiter Level
+        </label>
+
+        <select asp-for="RecruiterLevel" required>
+            <option value="">-- Select --</option>
+            <option value="Level-A">Level-A</option>
+            <option value="Level-B">Level-B</option>
+            <option value="Level-C">Level-C</option>
+            <option value="Level-D">Level-D</option>
+        </select>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="SpecialNote">
+            Special Note
+        </label>
+
+        <textarea asp-for="SpecialNote"
+                  rows="3"></textarea>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="JobPriority">
+            Job Priority
+        </label>
+
+        <select asp-for="JobPriority" required>
+            <option value="Urgent">Urgent</option>
+            <option value="High">High</option>
+            <option value="Normal">Normal</option>
+            <option value="Low">Low</option>
+        </select>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="JobDescription">
+            Job Description
+        </label>
+
+        <textarea asp-for="JobDescription"
+                  rows="8"
+                  required></textarea>
+    </div>
+
+    <br />
+
+    <button type="submit" class="assign-task-link">
+        Add Job
+    </button>
+
+</form>

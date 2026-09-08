@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+@model List<Assignment.Models.User>
+
+<h2>Assign Tasks as @ViewBag.Username</h2>
+
+@if (ViewBag.Role == "Manager" || ViewBag.Role == "Admin")
+{
+    <h3>Team Leaders</h3>
+
+    <table class="dash-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model.Where(u => u.Role == "Team Leader"))
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Phone</td>
+                    <td>@user.Location</td>
+                    <td>
+                        <form asp-controller="Home"
+                              asp-action="AssignTask"
+                              method="get">
+                            <input type="hidden" name="userName" value="@user.Name" />
+                            <button type="submit" class="edit-button">
+                                Assign Task
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <h3>Executives</h3>
+
+    <table class="dash-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model.Where(u => u.Role == "Executive"))
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Phone</td>
+                    <td>@user.Location</td>
+                    <td>
+                        <form asp-controller="Home"
+                              asp-action="AssignTask"
+                              method="get">
+                            <input type="hidden" name="userName" value="@user.Name" />
+                            <button type="submit" class="edit-button">
+                                Assign Task
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (ViewBag.Role == "Executive")
+{
+    <p>Cannot Assign Tasks</p>
+}
+else if (ViewBag.Role == "Team Leader")
+{
+    <h3>Executives</h3>
+
+    <table class="dash-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Location</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.Phone</td>
+                    <td>@user.Location</td>
+                    <td>
+                        <form asp-controller="Home"
+                              asp-action="AssignTask"
+                              method="get">
+                            <input type="hidden" name="userName" value="@user.Name" />
+                            <button type="submit" class="edit-button">
+                                Assign Task
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<hr />

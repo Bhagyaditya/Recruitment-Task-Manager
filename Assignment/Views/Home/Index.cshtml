@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    int displayId = 1;
+}
+@model List<Assignment.Models.User>
+
+<div class="container-fluid p-0">
+
+    <h2>User List</h2>
+
+    <table class="user-table" id="userTable">
+        <thead>
+            <tr>
+                <th id="sortId">ID</th>
+                <th id="sortName">User Name ↕</th>
+                <th id="sortPhone">Phone</th>
+                <th id="sortLocation">Location</th>
+                <th>Designation</th>
+                <th id="password">Password</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody id="userTableBody">
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@displayId</td>
+                    <td>@user.Name</td>
+                    <td>@user.Phone</td>
+                    <td>@user.Location</td>
+                    <td>@user.Role</td>
+                    <td>
+                        <button type="button"
+                                class="show-button"
+                                onclick="togglePassword(this)">
+                            <img src="~/images/open_eye.jpg"
+                                 alt="Show password"
+                                 title="toggle password"
+                                 class="show-icon" />
+                        </button>
+
+                        <span class="password-value" style="display: none;">
+                            @user.Password
+                        </span>
+                    </td>
+
+                    <td>
+                        <div class="action-buttons">
+
+                            <form method="post"
+                                  asp-controller="Home"
+                                  asp-action="DeleteUser"
+                                  onsubmit="return confirm('Are you sure you want to delete this user?');">
+
+                                <input type="hidden" name="id" value="@user.Id" />
+
+                                <button type="submit" class="show-button">
+                                    <img src="~/images/delete.png"
+                                         alt="Delete"
+                                         title="Delete"
+                                         class="eye-icon" />
+                                </button>
+
+                            </form>
+
+                            <form method="get"
+                                  asp-controller="Home"
+                                  asp-action="EditUser">
+
+                                <input type="hidden" name="id" value="@user.Id" />
+
+                                <button type="submit" class="show-button">
+                                    <img src="~/images/edit.jpg"
+                                         alt="Edit"
+                                         title="Edit"
+                                         class="eye-icon" />
+                                </button>
+
+                            </form>
+
+                        </div>
+                    </td>
+                </tr>
+                displayId++;
+            }
+        </tbody>
+    </table>
+
+    <div id="pagination" class="pagination"></div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="~/js/site.js"></script>

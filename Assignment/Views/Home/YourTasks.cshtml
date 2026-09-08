@@ -1,0 +1,155 @@
+﻿@model List<Assignment.Models.TaskModel>
+
+@{
+    ViewData["Title"] = "Your Tasks";
+}
+
+@if (ViewBag.Filter == "upcoming")
+{
+    <h2>Upcoming Tasks</h2>
+}
+else if (ViewBag.Filter == "overdue")
+{
+    <h2>Overdue Tasks</h2>
+}
+else
+{
+    <h2>Your Tasks</h2>
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="user-table task-table">
+
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Title</th>
+                <th>Task</th>
+                <th>Assigned By</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var task in Model)
+            {
+                @if (task.Status != "Approved" && task.Type != "Planning")
+                {
+
+                    bool dueToday =
+                    task.EndDate.Date ==
+                    DateTime.Today.Date;
+
+                    bool overdue =
+                    task.EndDate.Date <
+                    DateTime.Today.Date;
+
+
+                    <tr>
+                        <td>
+                                <span class="normal-task-badge">
+                                    @task.Type
+                                </span>
+                        </td>
+
+                        <td>
+                            <strong>
+                                @task.Title
+                            </strong>
+                        </td>
+
+                        <td>
+                            @task.TaskDescription
+                        </td>
+
+                        <td>
+                            @task.AssignedBy
+                        </td>
+
+                        <td>
+                            @task.StartDate.ToString("dd-MM-yyyy")
+                        </td>
+
+                        <td>
+
+                            @task.EndDate.ToString("dd-MM-yyyy")
+
+
+                            @if (overdue)
+                            {
+                                <span class="task-indicator overdue">
+                                    Overdue
+                                </span>
+                            }
+                            else if (dueToday)
+                            {
+                                <span class="task-indicator due-today">
+                                    Due Today
+                                </span>
+                            }
+
+                        </td>
+
+                        <td>
+
+                            <span class="task-status">
+                                @task.Status
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            @if (task.Status == "Pending")
+                            {
+                                <form asp-controller="Home"
+                                      asp-action="CompleteTask"
+                                      method="get">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@task.Id" />
+
+                                    <button type="submit"
+                                            class="edit-button">
+
+                                        Mark Complete
+
+                                    </button>
+
+                                </form>
+                            }
+                            else if (task.Status == "Completed")
+                            {
+                                <span class="completed-label">
+                                    Waiting for Approval
+                                </span>
+                            }
+
+                        </td>
+
+                    </tr>
+                }
+            }
+
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="no-tasks">
+
+        <h3>No Tasks</h3>
+
+        <p>
+            You currently have no tasks assigned to you.
+        </p>
+
+    </div>
+}

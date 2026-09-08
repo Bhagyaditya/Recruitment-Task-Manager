@@ -1,0 +1,137 @@
+﻿@model Assignment.Models.TaskModel
+
+@{
+    ViewData["Title"] = "Assign Task";
+}
+
+<h2>Assign Task</h2>
+
+<form asp-controller="Home"
+      asp-action="AssignTask"
+      class="userForm"
+      method="post">
+
+    <div>
+        <label>Assign To</label>
+
+        <input type="text"
+               value="@ViewBag.UserName"
+               readonly />
+
+        <input type="hidden"
+               asp-for="AssignedTo"
+               value="@ViewBag.UserName" />
+    </div>
+
+    <br />
+    <div>
+        <label>Title</label>
+
+        <input asp-for="Title" type="text"
+               name="title" required/>
+    </div>
+    <br />
+
+    <div>
+        <label asp-for="TaskDescription">Task</label>
+
+        <textarea asp-for="TaskDescription"
+                  rows="5"
+                  required></textarea>
+    </div>
+
+    <br />
+
+    <div>
+        <label asp-for="StartDate">Start Date</label>
+
+        <input asp-for="StartDate"
+               type="date"
+               id="startDate"
+               required />
+    </div>
+
+    <div>
+        <label asp-for="EndDate">End Date</label>
+
+        <input asp-for="EndDate"
+               type="date"
+               id="endDate"
+               required />
+    </div>
+
+    <span id="dateError" style="color:red; display:none;">
+        End Date must be after Start Date.
+    </span>
+
+
+    <br />
+    <br />
+    <label>Task Type</label>
+    <select asp-for="Type">
+        <option value="Recruitment">Recruitment</option>
+        <option value="Internal">Internal</option>
+        <option value="Manual">Manual</option>
+    </select>
+
+    <br />
+    <div id="cvRequiredDiv">
+        <label>CV Required</label>
+        <input type="number" asp-for="CVRequired" id="cvRequired">
+    </div>
+
+
+    <button type="submit">
+        Assign Task
+    </button>
+
+</form>
+
+<script>
+    const startDate = document.getElementById("startDate");
+    const endDate = document.getElementById("endDate");
+    const dateError = document.getElementById("dateError");
+
+    startDate.addEventListener("change", function () {
+
+       
+        const start = new Date(this.value);
+        start.setDate(start.getDate() + 1);
+
+        const minEndDate = start.toISOString().split("T")[0];
+
+        endDate.min = minEndDate;
+
+        
+        if (endDate.value && endDate.value <= this.value) {
+            endDate.value = "";
+        }
+    });
+
+    endDate.addEventListener("change", function () {
+
+        if (this.value <= startDate.value) {
+            dateError.style.display = "block";
+            this.value = "";
+        } else {
+            dateError.style.display = "none";
+        }
+    });
+
+
+    const taskType = document.getElementById("taskType");
+    const cvRequiredDiv = document.getElementById("cvRequiredDiv");
+
+    function checkTaskType() {
+        if (taskType.value === "Recruitment") {
+            cvRequiredDiv.style.display = "block";
+        } else {
+            cvRequiredDiv.style.display = "none";
+        }
+    }
+
+    taskType.addEventListener("change", checkTaskType);
+
+    
+    checkTaskType();
+</script>

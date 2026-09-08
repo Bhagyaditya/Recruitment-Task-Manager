@@ -1,0 +1,66 @@
+﻿@model List<Assignment.Models.TaskModel>
+
+@{
+    ViewData["Title"] = "Tasks Assigned By You";
+}
+
+<h2>Tasks Assigned By You</h2>
+<a asp-controller="Home"
+   asp-action="Dashboard"
+   asp-route-userName="@Context.Session.GetString("Username")"
+   class="add-task-button">
+    + Add Task
+</a>
+@if (Model != null && Model.Count > 0)
+{
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Task</th>
+                <th>Assigned To</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var task in Model)
+            {
+                bool isPlanning = task.Type == "Planning";
+        @if (!isPlanning)
+        {
+                <tr class="@(isPlanning ? "planning-task-row" : "")">
+                    <td>@task.Title</td>
+                    <td>@task.TaskDescription</td>
+                    <td>@task.AssignedTo</td>
+                    <td>@task.StartDate.ToString("dd-MM-yyyy")</td>
+                    <td>@task.EndDate.ToString("dd-MM-yyyy")</td>
+                    <td>
+                            <span class="normal-task-badge">
+                                @task.Type
+                            </span>
+                    </td>
+                    <td>@task.Status</td>
+                </tr>
+            }
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="no-tasks">
+
+        <h3>No Tasks</h3>
+
+        <p>
+            You currently have no tasks assigned to you.
+        </p>
+
+    </div>
+}
+
+<br />
