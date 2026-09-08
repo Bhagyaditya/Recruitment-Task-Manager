@@ -1,4 +1,4 @@
-# Task Management System
+# Recruiter Task Management System
 
 An ASP.NET Core MVC web application for managing users, jobs, tasks, recruitment planning, and CV uploads.
 
