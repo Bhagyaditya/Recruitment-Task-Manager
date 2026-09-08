@@ -134,13 +134,98 @@ You can check the installed .NET version with:
 ```bash
 dotnet --version
 ```
-
 ## Database Setup
 
-Create the database first. Using these queries
+Create the MySQL database first, then run the following SQL queries to create the required tables.
 
-Example:
-"
+### 1. Create the Database
+
+```sql
+CREATE DATABASE IF NOT EXISTS usertest;
+
+USE usertest;
+```
+
+### 2. Create the `users` Table
+
+```sql
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
+    location VARCHAR(255),
+    password_hash VARCHAR(255) NOT NULL,
+    password_plain VARCHAR(255),
+    role VARCHAR(50) NOT NULL
+);
+```
+
+### 3. Create the `jobs` Table
+
+```sql
+CREATE TABLE IF NOT EXISTS jobs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    job_title VARCHAR(255) NOT NULL,
+    company VARCHAR(255) NOT NULL,
+    hr VARCHAR(255) NOT NULL,
+    skills_set TEXT,
+    qualification TEXT,
+    experience INT,
+    salary DECIMAL(10,2),
+    job_location VARCHAR(255),
+    industry VARCHAR(255),
+    number_of_opening INT NOT NULL DEFAULT 0,
+    og_openings INT NOT NULL DEFAULT 0,
+    age_limit INT,
+    vacancy_live_date DATE,
+    interview_address TEXT,
+    recruiter_level VARCHAR(100),
+    special_note TEXT,
+    job_priority VARCHAR(100),
+    job_description TEXT,
+    created_by VARCHAR(255)
+);
+```
+
+### 4. Create the `tasks` Table
+
+```sql
+CREATE TABLE IF NOT EXISTS tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    assigned_to VARCHAR(255),
+    task TEXT,
+    assigned_by VARCHAR(255),
+    title VARCHAR(255),
+    start_date DATE,
+    end_date DATE,
+    task_type VARCHAR(100),
+    task_status VARCHAR(100) DEFAULT 'Pending',
+    cv_required INT DEFAULT 0,
+    job_id INT NULL,
+    completion_note TEXT,
+    FOREIGN KEY (job_id) REFERENCES jobs(id)
+);
+```
+
+### 5. Create the `cvs` Table
+
+```sql
+CREATE TABLE IF NOT EXISTS cvs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    job_id INT NOT NULL,
+    uploaded_by VARCHAR(255) NOT NULL,
+    file_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(500) NOT NULL,
+    uploaded_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (job_id) REFERENCES jobs(id)
+);
+```
+
+### Complete Database Setup
+
+Alternatively, you can run everything at once:
+
+```sql
 CREATE DATABASE IF NOT EXISTS usertest;
 
 USE usertest;
@@ -191,7 +276,6 @@ CREATE TABLE IF NOT EXISTS tasks (
     cv_required INT DEFAULT 0,
     job_id INT NULL,
     completion_note TEXT,
-
     FOREIGN KEY (job_id) REFERENCES jobs(id)
 );
 
@@ -202,11 +286,12 @@ CREATE TABLE IF NOT EXISTS cvs (
     file_name VARCHAR(255) NOT NULL,
     file_path VARCHAR(500) NOT NULL,
     uploaded_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
     FOREIGN KEY (job_id) REFERENCES jobs(id)
 );
-"
-> Make sure the database column names match the SQL queries in `HomeController.cs`.
+```
+
+> **Important:** Make sure the database column names match the SQL queries used in `HomeController.cs`.
+
 
 ## Configure MySQL Connection
 
