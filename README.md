@@ -1,4 +1,4 @@
-# Assignment Management System
+# Task Management System
 
 An ASP.NET Core MVC web application for managing users, jobs, tasks, recruitment planning, and CV uploads.
 
@@ -565,6 +565,6 @@ For a larger production application, consider introducing:
 
 ## Author / Project
 
-**Assignment Management System**
+**Recruitment Task Management System**
 
-Built as an ASP.NET Core MVC application using C#, MySQL, Razor, JavaScript/jQuery, Bootstrap, and BCrypt.
+Built as an ASP.NET Core MVC application using C#, MySQL, Razor, JavaScript/jQuery, Bootstrap, and BCrypt by Bhagyaditya Nair.
